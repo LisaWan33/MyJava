@@ -1,4 +1,3 @@
-
 public class stdnt {
  
 private String name;
