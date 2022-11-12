@@ -9,11 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,15 +21,37 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class indst01 { 
+public class indst03 { 
 	public static void main(String[] args) {
 	win1 win= new win1(); 
+	
+	//背景圖片
+		ImageIcon img =new ImageIcon("dir1/class.jpg");
+		
+		//將背景圖片顯示在標籤中
+		JLabel imgjl=new JLabel(img);
+		//再將標籤大小設置剛好填充了整個面板
+		imgjl.setBounds(0,0,img.getIconWidth(),img.getIconHeight());
+		
+		//獲取frame的最上層面板爲了設置其背景顏色（JPanel有設置透明的方法）
+		Container cp= win.getContentPane();
+		//把内容窗格轉為JPanel，否則不能用方法setOpaque()來使内容窗格透明
+		
+		cp.setLayout(new FlowLayout());
+		((JPanel) cp).setOpaque(false);//設置透明
+	
+	
+		//添加圖片到frame的第二層
+		//(背景標籤新增到jfram的LayeredPane面板裡
+		// // 把背景圖添加到分層窗格的最底層以作為背景
+		win.getLayeredPane().add(imgjl, new Integer(Integer.MIN_VALUE));
+	
 	}
 }
+
 //https://blog.xuite.net/mangohost/wretch/123103010
 //https://kknews.cc/code/v8xpovq.html
 
@@ -39,12 +60,14 @@ class win1 extends JFrame{ //父視窗
 	
 	public win1() {
 		super("學生資料檔案系統"); 
+		
 		setSize(700, 400);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//容器
 		Container pn=getContentPane();
+		
 		FlowLayout fy = new FlowLayout();
 		pn.setLayout(fy); 
 		
@@ -74,23 +97,19 @@ class win1 extends JFrame{ //父視窗
 		
 		//ad事件動作
 		ad.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 開啟視窗
+				// 開啟第一視窗
 				win2 fr=new win2();
 			}
 		});
 		
 		
 		sd.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				//開啟視窗
+				//開啟第二視窗
 				win3 fr1=new win3();
 			}
 		});
-		
 		setContentPane(pn);
 	}
 }
@@ -99,23 +118,23 @@ class win1 extends JFrame{ //父視窗
 class win2 extends JFrame{ //子視窗
 	
 	public win2() {
+	
 		super("添加資料表");
+		
 		setSize(700, 300);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-
 		//容器
 		Container pn=getContentPane();
+////////////////////////////////////////////////////////		
 		//面板
 		JPanel p1=new JPanel();
-		p1.setLayout(new GridLayout(4,2,5,5));
-		
-		
+		p1.setLayout(new GridLayout(5,2,5,5));
 		//建置內容=>>>>
 		//標籤1
-		JLabel name =new JLabel("姓名: ");
+		JLabel name =new JLabel("姓名: ",JLabel.CENTER);
 		p1.add(name);
 		//文本域
 		JTextField f1 = new JTextField(8);
@@ -125,10 +144,8 @@ class win2 extends JFrame{ //子視窗
 		//標籤2
 		JLabel  id=new JLabel("學號(請輸入正確數字號碼): ");
 		p1.add(id);
-		//文本域
 		JTextField f2 = new JTextField(8);
 		p1.add(f2);
-
 		
 		//標籤3
 		JLabel tel =new JLabel("電話/行動電話: ");
@@ -136,76 +153,45 @@ class win2 extends JFrame{ //子視窗
 		JTextField f3 = new JTextField(8);
 		p1.add(f3);
 		
-		//標籤4
+//		
+//		JLabel gender = new JLabel("性別(請輸入男/女): ");
+//		p1.add(gender);
+//		JTextField f4 =new JTextField(8);
+//		p1.add(f4);
 		
+		
+		//標籤4
 		JLabel addr= new JLabel("通訊地址: ");
 		p1.add(addr);
-		JTextField f4=new JTextField(32);
-		p1.add(f4);
-	
-	
-/////////////////////////////////////////////////
-//		JPanel p2=new JPanel();
-//		
-//		// 設置單選按鈕
-//		JLabel gender = new JLabel("性別");
-//		p2.add(gender);
-//
-//		JRadioButton male = new JRadioButton("男");
-//
-//		JRadioButton female = new JRadioButton("女");
-//
-//		// 單選按鈕組,同一個單選按鈕組的互斥.
-//
-//		ButtonGroup group = new ButtonGroup();
-//
-//		group.add(male);
-//		p2.add(male);
-//		group.add(female);
-//		p2.add(female);
-//		
-	////////////////////////////////////
-		JPanel p3=new JPanel();
-		p1.setLayout(new GridLayout(2,2,5,5));
+		JTextField f5=new JTextField(32);
+		p1.add(f5);
+		
 		//標籤5
-
-		JLabel ctp =new JLabel("聯絡人: ");
-		p3.add(ctp);
-		JTextField f5 = new JTextField(16);
-		p3.add(f5);
+		JLabel ctp =new JLabel("緊急聯絡人: ");
+		p1.add(ctp);
+		JTextField f6 = new JTextField(16);
+		p1.add(f6);
 		
 		//標籤6
-		JLabel ctptel =new JLabel("聯絡人電話: ");
-		p3.add(ctptel);
-		JTextField f6 = new JTextField(16);
-		p3.add(f6);
+		JLabel ctptel =new JLabel("緊急聯絡人電話: ");
+		p1.add(ctptel);
+		JTextField f7 = new JTextField(16);
+		p1.add(f7);
 		
-		
-///////////////////////////////////////////////	
-		JPanel p4=new JPanel();
-	
+		//標籤7
 		JLabel remark = new JLabel("備註: ");
-		p4.add(remark);
-		JTextField f7=new JTextField(30);
-		p4.add(f7);
+		p1.add(remark);
+		JTextField f8=new JTextField(30);
+		p1.add(f8);
 		
-///////////////////////////////////////////////		
 		//可建按鈕(是否新增一筆資料)
-		JPanel p5=new JPanel();
-		
 		JButton bt=new JButton("新增");
 		JButton bt1=new JButton("取消");
-		p5.add(bt);
-		p5.add(bt1);
-		
-		setLayout(new GridLayout(6,1,5,5));
-		
+		p1.add(bt);
+		p1.add(bt1);
+
 		pn.add(p1);
-//		pn.add(p2);
-		pn.add(p3);pn.add(p4);pn.add(p5);
-		
 		setContentPane(pn);
-		
 		
 		bt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -220,20 +206,22 @@ class win2 extends JFrame{ //子視窗
 					String name = f1.getText();
 					String id = f2.getText();
 					String tel =f3.getText();
-					String addr = f4.getText();
-					String ctp = f5.getText();
-					String ctptel = f6.getText();
-					String remark = f7.getText();
+//					String gender = f4.getText();
+					String addr = f5.getText();
+					String ctp = f6.getText();
+					String ctptel = f7.getText();
+					String remark = f8.getText();
 					
 					String sql=	"INSERT INTO stdnt(姓名,學號,電話,通訊地址,聯絡人,聯絡人電話,備註欄)VALUES(?,?,?,?,?,?,?)";
 					PreparedStatement pstmt =conn.prepareStatement(sql);
 					pstmt.setString(1, name);
 					pstmt.setString(2, id);
 					pstmt.setString(3, tel);
-					pstmt.setString(4, addr);
-					pstmt.setString(5, ctp);
-					pstmt.setString(6, ctptel);
-					pstmt.setString(7, remark);
+//					pstmt.setString(4, gender);
+					pstmt.setString(5, addr);
+					pstmt.setString(6, ctp);
+					pstmt.setString(7, ctptel);
+					pstmt.setString(8, remark);
 					
 					pstmt.executeUpdate();
 					conn.close();
@@ -242,7 +230,7 @@ class win2 extends JFrame{ //子視窗
 					dispose();
 				} catch (Exception e1) {
 					System.out.println("xx");
-					JOptionPane.showMessageDialog(bt1, "資料未填寫正確或學號已重複、輸入有誤，請重新輸入謝謝!");
+					JOptionPane.showMessageDialog(bt1, "資料表填寫未正確或學號已重複、輸入有誤，請重新檢查後再輸入謝謝!");
 				}
 			}
 		});
@@ -287,6 +275,42 @@ class win3 extends JFrame{ //子視窗
 		pn.add(jb1);
 		
 		setContentPane(pn);
-	
+		jb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Properties prop= new Properties();
+				prop.put("user", "root");
+				prop.put("password", "root");
+				String url="jdbc:mysql://localhost:3309/eeit53";
+									
+				try {
+						Connection conn = DriverManager.getConnection(url,prop);
+						String sql="select *from stdnt where 學號='"+field7.getText()+"'";
+						Statement stmt = conn.createStatement(
+								ResultSet.TYPE_SCROLL_INSENSITIVE, 
+								ResultSet.CONCUR_UPDATABLE);
+						ResultSet rs=stmt.executeQuery(sql);
+						
+				}catch(Exception e2) {
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			}
+		});
+		
+		
+		
+		jb1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 }
