@@ -1,3 +1,4 @@
+package tw.lisa.myitems;
 public class stdnt {
  
 private String name;

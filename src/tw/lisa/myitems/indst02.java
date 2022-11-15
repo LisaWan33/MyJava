@@ -82,3 +82,94 @@ public class indst02 {
 //p2.add(female);
 //
 ////////////////////////////////////
+
+
+//Properties prop = new Properties();
+//prop.put("user", "root");
+//prop.put("password", "root");
+//
+//String sql = "SELECT * FROM stdnt WHERE 學號?";
+//try {
+//	Connection conn = 
+//		DriverManager.getConnection(
+//			"jdbc:mysql://localhost:3309/eeit53", prop);
+//	
+//	PreparedStatement pstmt=conn.prepareStatement(sql, 
+//			ResultSet.TYPE_SCROLL_INSENSITIVE, 
+//			ResultSet.CONCUR_UPDATABLE);
+//	
+//	String id = f7.getText();
+//	pstmt.setString(1, id);
+//	ResultSet rs=pstmt.executeQuery();
+//	pstmt.executeUpdate();
+//	conn.close();
+//	
+//	while(rs.next()) {
+//		stdnt std=new stdnt();
+//	std.setId(rs.getString("姓名"));
+//	std.setTel(rs.getString("電話"));
+//	std.setId(rs.getString("學號"));
+//	
+//std.setBirthday(rs.getString("生日"));
+//	
+//	std.setTel(rs.getString("聯絡人"));
+//	std.setCtptel(rs.getString("聯絡人電話"));
+//	std.setAddr(rs.getString("通訊地址"));
+//	std.setRemark(rs.getString("備註欄"));
+//	
+//	rs.updateRow();
+//	System.out.println("ok");
+//	
+//	}
+//	
+//	stdntTable.newsql();
+//}catch(Exception e1) {
+//	System.out.println(e);
+//}
+
+
+
+//JLabel search=new JLabel("查詢(請輸入學號):");
+//top.add(search);
+
+//JTextField f7=new JTextField(8);
+//top.add(f7);
+
+
+
+//	stdntTable.newsql();
+	
+//String id =f7.getText();
+//	if(id==""||id.equals(null)) {
+//		JOptionPane.showMessageDialog(jb, "查詢資料不能為空","提示",JOptionPane.INFORMATION_MESSAGE);
+//		return;
+//	}else {
+//		try {
+//		String sql="SELECT*FROM stdnt WHERE 學號=%s";
+//		
+//		
+//		
+//		stdntDB = new stdntDB();
+//		stdntDB.queryData(sql);
+//		tableModel = new MystdntTableModel();
+//		
+//		jt.setModel(tableModel);
+//		tableModel.setColumnIdentifiers(stdntDB.getHeader());
+//		repaint();
+	
+//		
+//	Connection conn = 
+//			DriverManager.getConnection(
+//				"jdbc:mysql://localhost:3309/eeit53", prop);
+//		
+//	PreparedStatement pstmt=conn.prepareStatement(id, 
+//			ResultSet.TYPE_SCROLL_INSENSITIVE, 
+//			ResultSet.CONCUR_UPDATABLE);
+//	
+//	pstmt.setString(1, id);
+	
+	
+//}catch(Exception e1) {
+//	System.out.println(e);
+//}
+//	}
