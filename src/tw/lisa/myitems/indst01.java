@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -12,13 +11,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.math.MathContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -187,11 +183,17 @@ class win2 extends JFrame{ //建置子視窗一
 		//建置內容=>標籤=>文本域
 		JLabel name =new JLabel("姓名: ",JLabel.CENTER);
 		JTextField f1 = new JTextField(8);
+		
+//		String hintText=new String();
+//		f1.setText(hintText);
+//		f1.setForeground(Color.gray);
+//		f1.addFocusListener(new JTextFi());
+		
 		p1.add(name);
 		p1.add(f1);
 
 		
-		JLabel tel =new JLabel("電話/行動電話: ",JLabel.CENTER);
+		JLabel tel =new JLabel("電話:"+"(ex:09xxxxxxxx,市號電話請加'-')\n",JLabel.CENTER);
 		JTextField f2 = new JTextField(8);
 
 		p1.add(tel);
@@ -277,11 +279,15 @@ class win2 extends JFrame{ //建置子視窗一
 					String addr = f7.getText();
 					String remark = f8.getText();
 					
-//					String regex="0\\d{2,3}[-]?\\d{7,8}|0\\d{2,3}\\s?\\d{7,8}";
-//					boolean flag=f2.getText().matches(regex);
-//					if(flag) {
-//						System.out.println("ok");
-
+					String regex="0\\d{2,3}\\s?\\d{7,8}|0\\d{1,2}[-]?\\d{6}|0\\d{4,5}[-]?\\d{4}";
+					boolean flag=tel.matches(regex);
+					boolean flag1=ctptel.matches(regex);
+					
+					if(flag) {
+						System.out.println("個人電話無錯誤");
+					if(flag1) {
+						System.out.println("聯絡人電話無錯誤");
+						
 					String sql=	"INSERT INTO stdnt(姓名,電話,學號,生日,聯絡人,聯絡人電話,通訊地址,備註欄)VALUES(?,?,?,?,?,?,?,?)";
 					PreparedStatement pstmt =conn.prepareStatement(sql);
 					pstmt.setString(1, name);
@@ -296,14 +302,19 @@ class win2 extends JFrame{ //建置子視窗一
 					pstmt.executeUpdate();
 					conn.close();
 					System.out.println("ok");
-					JOptionPane.showMessageDialog(bt, "已成功新增一筆學生資料! ");
-//					}else {
-//						System.out.println("xx");
-//					 JOptionPane.showMessageDialog(bt, "輸入的電話號碼有誤!請重新確認!");
-//					}
+					JOptionPane.showMessageDialog(bt, "已成功新增一筆學生資料 ! ");
+					}else {
+						System.out.println("聯絡人電話有錯誤");
+						JOptionPane.showMessageDialog(bt, "輸入的聯絡人電話有誤 !"+"請重新確認 !\n");
+					}
+					}else {
+						System.out.println("個人電話號碼有錯誤");
+					 JOptionPane.showMessageDialog(bt, "輸入的個人電話號碼有誤 !"+"請重新確認 !\n ");
+					}
+				
 				} catch (Exception e1) {
-					System.out.println("xx");
-					JOptionPane.showMessageDialog(bt, "資料未填寫正確或學號有重複、電話輸入錯誤，請重新檢查謝謝!");
+					System.out.println("學號重複");
+					JOptionPane.showMessageDialog(bt, "資料未填寫正確或學號有重複，請重新檢查謝謝 !");
 				}
 			}
 		});
