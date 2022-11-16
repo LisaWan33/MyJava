@@ -1,11 +1,14 @@
 package tw.lisa.myitems;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,8 +34,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
-
-import tw.lisa.myjava.ToolJFrame_01;
 
 public class indst01 { 
 	
@@ -61,14 +62,23 @@ public class indst01 {
 	//背景標籤新增到jframe的LayeredPane面板裡
 	// 把背景圖添加到分層窗格的最底層以作為背景
 	win.getLayeredPane().add(imgjl, new Integer(Integer.MIN_VALUE));
-		
 		}
 	}
 
-//https://www.796t.com/content/1549374483.html:設置背景
-//https://blog.xuite.net/mangohost/wretch/123103010
-//https://kknews.cc/code/v8xpovq.html
-
+//https://www.796t.com/content/1549374483.html:設置背景1
+//https://blog.csdn.net/la0396580/article/details/112668115:設置背景2 
+//https://blog.xuite.net/mangohost/wretch/123103010:主視窗中 建立子視窗
+//https://kknews.cc/code/v8xpovq.html:布局管理器
+//https://blog.csdn.net/yanjingtp/article/details/79282365: JTextField 默认文字提示功能
+//https://docs.oracle.com/javase/7/docs/api/:ImageIcon (API)
+//https://zh.m.wikipedia.org/zh-tw/%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E9%9B%BB%E8%A9%B1%E8%99%9F%E7%A2%BC:中華民國電話號碼 wiki
+//https://img.freepik.com/free-vector/education-background-with-pencil_53876-115369.jpg?w=360&t=st=1668492970~exp=1668493570~hmac=23aef40fba61b23f2cc99d7f64e7059a48d695254cfa67e9b6b4ff7e2b48fe69:圖片
+//https://www.796t.com/content/1549931589.html:SQL語法大全
+//https://blog.judysocute.com/2020/06/21/%E7%AC%AC-20-%E9%80%B1-%E4%BD%BF%E7%94%A8-preparedstatement/:使用 PreparedStatement
+//https://www.cnblogs.com/xmb7/archive/2012/09/12/2682271.html :學生資訊系統
+//http://tw.gitbook.net/swing/swing_gridlayout.html: Swing GridLayout布局類
+//https://blog.csdn.net/Vision_Tung/article/details/53433775:对于JFrame通过菜单栏切换窗口、界面
+//https://www.bookstack.cn/read/java-se6/docs-ch19.md:文字編輯
 
 class win1 extends JFrame{ //父視窗
 	
@@ -83,8 +93,7 @@ class win1 extends JFrame{ //父視窗
 		FlowLayout fy = new FlowLayout();
 		pn.setLayout(fy); 
 		
-		
-		//建置選單列=>選單=>選單中項目
+		//建置菜單列=>菜單=>菜單中項目
 		JMenuBar mb=new JMenuBar();
 		
 		JMenu imp =new JMenu("匯入");
@@ -100,17 +109,11 @@ class win1 extends JFrame{ //父視窗
 		JMenu abo=new JMenu("關於");
 		JMenuItem ab=new JMenuItem("關於此系統介紹");
 		
-		imp.add(ad);
-		sea.add(sd);
-		lt.add(txt);
-		abo.add(ab);
-		
-		mb.add(imp);
-		mb.add(sea);
-		mb.add(lt);
-		mb.add(abo);
+		imp.add(ad);		sea.add(sd);		lt.add(txt);		abo.add(ab);		
+		mb.add(imp);		mb.add(sea);		mb.add(lt);		    mb.add(abo);
 		
 		pn.add(mb);
+		
 		
 		//ad事件動作
 		ad.addActionListener(new ActionListener() {
@@ -183,30 +186,27 @@ class win2 extends JFrame{ //建置子視窗一
 		//建置內容=>標籤=>文本域
 		JLabel name =new JLabel("姓名: ",JLabel.CENTER);
 		JTextField f1 = new JTextField(8);
-		
-//		String hintText=new String();
-//		f1.setText(hintText);
-//		f1.setForeground(Color.gray);
-//		f1.addFocusListener(new JTextFi());
+		f1.addFocusListener(new HintListener(f1, "輸入正確姓名"));
 		
 		p1.add(name);
 		p1.add(f1);
-
 		
-		JLabel tel =new JLabel("電話:"+"(ex:09xxxxxxxx,市號電話請加'-')\n",JLabel.CENTER);
+		JLabel tel =new JLabel("電話: ",JLabel.CENTER);
 		JTextField f2 = new JTextField(8);
-
+		f2.addFocusListener(new HintListener(f2, "(ex:09xxxxxxxx、02-xxxxxxxx) "));
 		p1.add(tel);
 		p1.add(f2);
 		
 	
 		JLabel  id=new JLabel("學號: ",JLabel.CENTER);
 		JTextField f3 = new JTextField(8);
+		f3.addFocusListener(new HintListener(f3, "(ex:1、38) "));
 		p1.add(id);
 		p1.add(f3);
 		
-		JLabel date= new JLabel("生日(yyyy-mm-dd): ",JLabel.CENTER);
+		JLabel date= new JLabel("生日: ",JLabel.CENTER);
 		JTextField f4=new JTextField(8);
+		f4.addFocusListener(new HintListener(f4,"(yyyy-mm-dd)" ));
 		p1.add(date);
 		p1.add(f4);
 		
@@ -216,11 +216,13 @@ class win2 extends JFrame{ //建置子視窗一
 		
 		JLabel ctp =new JLabel("緊急聯絡人  : ");
 		JTextField f5 = new JTextField(16);
+		f5.addFocusListener(new HintListener(f5, "輸入正確姓名"));
 		p2.add(ctp);
 		p2.add(f5);
 		
 		JLabel ctptel =new JLabel("緊急聯絡人電話   : ");
 		JTextField f6 = new JTextField(16);
+		f6.addFocusListener(new HintListener(f6, "(ex:09xxxxxxxx、02-xxxxxxxx) "));
 		p2.add(ctptel);
 		p2.add(f6);
 		
@@ -229,6 +231,7 @@ class win2 extends JFrame{ //建置子視窗一
 		
 		JLabel addr= new JLabel("通訊地址: ");
 		JTextField f7=new JTextField(30);
+		f7.addFocusListener(new HintListener(f7, "請輸入正確地址 "));
 		p3.add(addr);
 		p3.add(f7);
 		
@@ -237,6 +240,7 @@ class win2 extends JFrame{ //建置子視窗一
 		
 		JLabel remark = new JLabel("備註欄位: ");
 		JTextField f8=new JTextField(30);
+		f8.addFocusListener(new HintListener(f8, "可填可不填 "));
 		p4.add(remark);
 		p4.add(f8);
 		
@@ -279,7 +283,14 @@ class win2 extends JFrame{ //建置子視窗一
 					String addr = f7.getText();
 					String remark = f8.getText();
 					
-					String regex="0\\d{2,3}\\s?\\d{7,8}|0\\d{1,2}[-]?\\d{6}|0\\d{4,5}[-]?\\d{4}";
+					//電話號碼正規表示法(行動+市話)
+					String regex="[0][0-9]{1}[-][0-9]{8}|"
+							+ "[0][0-9]{1}[-][0-9]{7}|"
+							+ "[0][0-9]{2}[-][0-9]{7}|"
+							+ "[0][0-9]{2}[-][0-9]{6}|"
+							+ "[0][0-9]{3}[-][0-9]{5}|"
+							+ "[0][9][0-9]{8}";
+					
 					boolean flag=tel.matches(regex);
 					boolean flag1=ctptel.matches(regex);
 					
@@ -326,7 +337,37 @@ class win2 extends JFrame{ //建置子視窗一
 		});
 	}
 }
-
+class HintListener implements FocusListener{
+	private  String hintText;
+	private JTextField tf;
+	
+	public HintListener(JTextField jtf,String hintText) {
+		this.tf=jtf;
+		this.hintText=hintText;
+		
+		jtf.setText(hintText);
+		jtf.setForeground(Color.GRAY);
+	}
+	@Override
+	public void focusGained(FocusEvent e){
+		//獲取注視時，需清除提示內容(設成空字串，且設置顏色變成黑色)
+		String temp=tf.getText();
+		if(temp.equals(hintText)) {
+			tf.setText("");
+			tf.setForeground(Color.black);
+		}
+	}
+	@Override
+	public void focusLost(FocusEvent e) {
+		//失去注視時，需重回提示內容(若當為空字串，設置顏色變成灰色，且返回提示字串)
+		String temp=tf.getText();
+		if(temp.equals("")) {
+			tf.setForeground(Color.gray);
+			tf.setText(hintText);
+			
+		}
+	}
+}
 
 class win3 extends JFrame{ //建置子視窗二
 	private MystdntTable stdntTable;

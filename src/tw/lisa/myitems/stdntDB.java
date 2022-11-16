@@ -67,7 +67,10 @@ public class stdntDB {
 		}
 	}
 	
-	
+//	public String getValueAt(int row, int col) {
+//		 return (fieldNames.this.rs.get(row)).get(col);
+//		
+//	}
 	
 	public void setData(int row, int col, String data) {
 		try {
