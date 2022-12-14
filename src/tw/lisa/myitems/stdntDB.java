@@ -86,6 +86,7 @@ public class stdntDB {
 		try {
 			rs.absolute(row);
 			rs.deleteRow();
+		
 		}catch(Exception e) {
 			System.out.printf("%d : %s\n", row, e.toString());
 		}

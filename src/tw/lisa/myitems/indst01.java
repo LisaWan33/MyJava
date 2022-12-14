@@ -188,14 +188,12 @@ class win2 extends JFrame{ //建置子視窗一
 		JTextField f1 = new JTextField(8);
 		f1.addFocusListener(new HintListener(f1, "輸入正確姓名"));
 		
-		p1.add(name);
-		p1.add(f1);
+		p1.add(name);	p1.add(f1);
 		
 		JLabel tel =new JLabel("電話: ",JLabel.CENTER);
 		JTextField f2 = new JTextField(8);
 		f2.addFocusListener(new HintListener(f2, "(ex:09xxxxxxxx、02-xxxxxxxx) "));
-		p1.add(tel);
-		p1.add(f2);
+		p1.add(tel);	p1.add(f2);
 		
 	
 		JLabel  id=new JLabel("學號: ",JLabel.CENTER);
@@ -232,8 +230,7 @@ class win2 extends JFrame{ //建置子視窗一
 		JLabel addr= new JLabel("通訊地址: ");
 		JTextField f7=new JTextField(30);
 		f7.addFocusListener(new HintListener(f7, "請輸入正確地址 "));
-		p3.add(addr);
-		p3.add(f7);
+		p3.add(addr);		p3.add(f7);
 		
 		//第四面板
 		JPanel p4=new JPanel();
@@ -241,28 +238,26 @@ class win2 extends JFrame{ //建置子視窗一
 		JLabel remark = new JLabel("備註欄位: ");
 		JTextField f8=new JTextField(30);
 		f8.addFocusListener(new HintListener(f8, "可填可不填 "));
-		p4.add(remark);
-		p4.add(f8);
+		p4.add(remark);		p4.add(f8);
 		
 		//第五面板=>按鈕
 		JPanel p5=new JPanel();
 		
 		JButton bt=new JButton("新增");
 		JButton bt1=new JButton("取消");
-		p5.add(bt);
-		p5.add(bt1);
+		p5.add(bt);		p5.add(bt1);
 		
 		setLayout(new GridLayout(6,1,5,5));
 		
-		pn.add(p1);
-		pn.add(p2);
-		pn.add(p3);
-		pn.add(p4);
-		pn.add(p5);
+		pn.add(p1);		
+		pn.add(p2);		
+		pn.add(p3);		
+		pn.add(p4);		
+		pn.add(p5);		
 		
 		setContentPane(pn);
 		
-		//開始做按鈕的事
+		//開始做按鈕的事bt(新增鍵)
 		bt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//想在資料表中新增資料
@@ -284,45 +279,34 @@ class win2 extends JFrame{ //建置子視窗一
 					String remark = f8.getText();
 					
 					//電話號碼正規表示法(行動+市話)
-					String regex="[0][0-9]{1}[-][0-9]{8}|"
-							+ "[0][0-9]{1}[-][0-9]{7}|"
+					String regex="[0][24]{1}[-][0-9]{8}|"
+							+ "[0][3-8]{1}[-][0-9]{7}|"
 							+ "[0][0-9]{2}[-][0-9]{7}|"
 							+ "[0][0-9]{2}[-][0-9]{6}|"
 							+ "[0][0-9]{3}[-][0-9]{5}|"
 							+ "[0][9][0-9]{8}";
 					
-					boolean flag=tel.matches(regex);
-					boolean flag1=ctptel.matches(regex);
-					
+					boolean flag=tel.matches(regex); 	boolean flag1=ctptel.matches(regex);
 					if(flag) {
 						System.out.println("個人電話無錯誤");
 					if(flag1) {
 						System.out.println("聯絡人電話無錯誤");
-						
-					String sql=	"INSERT INTO stdnt(姓名,電話,學號,生日,聯絡人,聯絡人電話,通訊地址,備註欄)VALUES(?,?,?,?,?,?,?,?)";
+					String sql=
+					"INSERT INTO stdnt(姓名,電話,學號,生日,聯絡人,聯絡人電話,通訊地址,備註欄)VALUES(?,?,?,?,?,?,?,?)";
 					PreparedStatement pstmt =conn.prepareStatement(sql);
-					pstmt.setString(1, name);
-					pstmt.setString(2, tel);
-					pstmt.setString(3, id);
-					pstmt.setString(4, date);
-					pstmt.setString(5, ctp);
-					pstmt.setString(6, ctptel);
-					pstmt.setString(7, addr);
-					pstmt.setString(8, remark);
-					
-					pstmt.executeUpdate();
-					conn.close();
-					System.out.println("ok");
+					pstmt.setString(1, name);		pstmt.setString(2, tel); 			pstmt.setString(3, id);
+					pstmt.setString(4, date);		pstmt.setString(5, ctp);			pstmt.setString(6, ctptel);
+					pstmt.setString(7, addr);		pstmt.setString(8, remark);			
+					pstmt.executeUpdate();			conn.close();  			        	System.out.println("ok");
 					JOptionPane.showMessageDialog(bt, "已成功新增一筆學生資料 ! ");
 					}else {
 						System.out.println("聯絡人電話有錯誤");
-						JOptionPane.showMessageDialog(bt, "輸入的聯絡人電話有誤 !"+"請重新確認 !\n");
+						JOptionPane.showMessageDialog(bt, "輸入的聯絡人電話有誤 !請重新確認 !");
 					}
 					}else {
 						System.out.println("個人電話號碼有錯誤");
-					 JOptionPane.showMessageDialog(bt, "輸入的個人電話號碼有誤 !"+"請重新確認 !\n ");
+					 JOptionPane.showMessageDialog(bt, "輸入的個人電話號碼有誤 !請重新確認 !");
 					}
-				
 				} catch (Exception e1) {
 					System.out.println("學號重複");
 					JOptionPane.showMessageDialog(bt, "資料未填寫正確或學號有重複，請重新檢查謝謝 !");
@@ -396,10 +380,7 @@ class win3 extends JFrame{ //建置子視窗二
 		JButton jb2 = new JButton("刪除");
 		
 		add(top,BorderLayout.NORTH);
-		top.add(jb); 
-		top.add(jb1);
-		top.add(jb2);
-		
+		top.add(jb); 		top.add(jb1);		top.add(jb2);
 		
 	jb.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -509,8 +490,6 @@ private void openfile() throws Exception { // 讀取檔案並附加至文字編�
 		myTextArea.append(lineSeparator);
 	} buf.close();
 }
-
-
 
 private void saveasfile()throws Exception{
 	String text=myTextArea.getText();
